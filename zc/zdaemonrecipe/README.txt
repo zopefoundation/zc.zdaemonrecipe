@@ -72,10 +72,10 @@ configuration file and a run script in the bin directory:
     import zdaemon.zdctl
     <BLANKLINE>
     if __name__ == '__main__':
-        zdaemon.zdctl.main([
+        sys.exit(zdaemon.zdctl.main([
             '-C', '/sample-buildout/parts/run/zdaemon.conf',
             ]+sys.argv[1:]
-            )
+            ))
 
 zdaemon will also be installed:
 
@@ -157,10 +157,10 @@ deployment-defined locations:
     import zdaemon.zdctl
     <BLANKLINE>
     if __name__ == '__main__':
-        zdaemon.zdctl.main([
+        sys.exit(zdaemon.zdctl.main([
             '-C', 'etc/run-zdaemon.conf',
             ]+sys.argv[1:]
-            )
+            ))
 
     >>> cat('logrotate', 'test-deploy-run')
     logs/run.log {
