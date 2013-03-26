@@ -26,7 +26,7 @@ def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
 long_description=(
-        read('README.txt')
+        read('README.rst')
         + '\n' +
         'Detailed Documentation\n'
         '**********************\n'
@@ -38,6 +38,8 @@ long_description=(
         )
 
 open('doc.txt', 'w').write(long_description)
+
+tests_require = ['zope.testing']
 
 setup(
     name = name,
@@ -55,5 +57,7 @@ setup(
     install_requires = ['setuptools',
                         'zc.buildout', 'zc.recipe.egg',
                         'ZConfig'],
-    zip_safe = False,
+    test_suite='zc.zdaemonrecipe.tests.test_suite',
+    tests_require=tests_require,
+    zip_safe=False,
     )
