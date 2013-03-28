@@ -171,7 +171,6 @@ deployment-defined locations:
       endscript
     }
 
-
 If you want to override any part of the generated zdaemon configuration,
 simply provide a zdaemon.conf option in your instance section:
 
@@ -219,6 +218,57 @@ simply provide a zdaemon.conf option in your instance section:
     <BLANKLINE>
     <eventlog>
     </eventlog>
+
+
+Creating shell start scripts
+----------------------------
+
+By default, the startup scripts are generated Python scripts that use
+the zdaemon module.  Sometimes, this is inconvenient.  In particular,
+when deploying software, generated Python scripts may break after a
+software update because they contain pasths to software eggs.  We can
+request shell scripts that invoke a generic zdaemon script.  The shell
+script only depends on the path to the zdaemon script, which generally
+doesn't change when updating softawre.
+
+To request a shell script, add a shell-script option with a true value:
+
+    >>> write('buildout.cfg',
+    ... '''
+    ... [buildout]
+    ... parts = run
+    ...
+    ... [run]
+    ... recipe = zc.zdaemonrecipe
+    ... program = sleep 1
+    ... shell-script = true
+    ... deployment = deploy
+    ...
+    ... [deploy]
+    ... name = test-deploy
+    ... etc-directory = etc
+    ... rc-directory = init.d
+    ... log-directory = logs
+    ... run-directory = run
+    ... logrotate-directory = logrotate
+    ... user = alice
+    ... ''')
+
+    >>> print system(buildout),  # doctest: +NORMALIZE_WHITESPACE
+    Uninstalling run.
+    Installing run.
+    zc.zdaemonrecipe: Generated shell script
+        '/sample-buildout/init.d/test-deploy-run'.
+
+    >>> cat('init.d', 'test-deploy-run')  # doctest: +NORMALIZE_WHITESPACE
+    #!/bin/sh
+    su alice -c \
+        "/sample-buildout/bin/zdaemon
+             -C '/sample-buildout/etc/run-zdaemon.conf' $*"
+
+    >>> ls('etc')
+    -  run-zdaemon.conf
+
 
 Using the zdaemon recipe from other recipes
 -------------------------------------------
