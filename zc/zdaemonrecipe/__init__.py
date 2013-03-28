@@ -13,14 +13,22 @@
 ##############################################################################
 """zdaemon -- a package to manage a daemon application."""
 
-import os, cStringIO
+import ZConfig.schemaless
+import cStringIO
+import logging
+import os
+import zc.buildout.easy_install
+import zc.recipe.egg
 
-import zc.buildout.easy_install, zc.recipe.egg, ZConfig.schemaless
+
+logger = logging.getLogger("zc.zdaemonrecipe")
+
 
 class Recipe:
 
     def __init__(self, buildout, name, options):
         self.name, self.options = name, options
+        self.buildout = buildout
 
         deployment = self.deployment = options.get('deployment')
         if deployment:
@@ -45,6 +53,18 @@ class Recipe:
         options['eggs'] = options.get('eggs', 'zdaemon')
         self.egg = zc.recipe.egg.Egg(buildout, name, options)
 
+        shell_script = options.get('shell-script', '')
+        if shell_script in ('false', ''):
+            self.shell_script = False
+        elif shell_script == 'true':
+            self.shell_script = True
+            options['zdaemon'] = os.path.join(
+                buildout['buildout']['bin-directory'],
+                options.get('zdaemon', 'zdaemon'),
+            )
+        else:
+            raise zc.buildout.UserError(
+                'The shell-script option value must be "true", "false" or "".')
 
     def install(self):
         options = self.options
@@ -79,8 +99,7 @@ class Recipe:
                 'transcript.log',
                 )
             socket_path = os.path.join(run_directory, 'zdaemon.sock')
-            rc = self.name
-            rc=os.path.join(options['rc-directory'], rc)
+            rc = os.path.join(options['rc-directory'], self.name)
             options.created(run_directory)
             if not os.path.exists(run_directory):
                 os.mkdir(run_directory)
@@ -121,17 +140,39 @@ class Recipe:
 
         rc = os.path.abspath(rc)
         options.created(rc)
-        zc.buildout.easy_install.scripts(
-            [(rc, 'zdaemon.zdctl', 'main')],
-            ws, options['executable'], options['rc-directory'],
-            arguments = ('['
-                         '\n        %r, %r,'
-                         '\n        ]+sys.argv[1:]'
-                         '\n        '
-                         % ('-C', zdaemon_conf_path,
-                            )
-                         ),
-            )
+        if self.shell_script:
+            if not os.path.exists(options['zdaemon']):
+                logger.warn(no_zdaemon % options['zdaemon'])
+
+            contents = "%(zdaemon)s -C '%(conf)s' $*" % dict(
+                zdaemon=options['zdaemon'],
+                conf=os.path.join(self.buildout['buildout']['directory'],
+                                  zdaemon_conf_path),
+                )
+            if options.get('user'):
+                contents = 'su %(user)s -c \\\n  "%(contents)s"' % dict(
+                    user=options['user'],
+                    contents=contents,
+                    )
+            contents = "#!/bin/sh\n%s\n" % contents
+
+            dest = os.path.join(options['rc-directory'], rc)
+            if not (os.path.exists(dest) and open(dest).read() == contents):
+                open(dest, 'w').write(contents)
+                os.chmod(dest, 0755)
+                logger.info("Generated shell script %r.", dest)
+        else:
+            zc.buildout.easy_install.scripts(
+                [(rc, 'zdaemon.zdctl', 'main')],
+                ws, options['executable'], options['rc-directory'],
+                arguments = ('['
+                             '\n        %r, %r,'
+                             '\n        ]+sys.argv[1:]'
+                             '\n        '
+                             % ('-C', zdaemon_conf_path,
+                                )
+                             ),
+                )
 
         return options.created()
 
