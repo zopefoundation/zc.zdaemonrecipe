@@ -12,7 +12,6 @@
 #
 ##############################################################################
 name = 'zc.zdaemonrecipe'
-version = '0.3dev'
 
 import os
 from setuptools import setup, find_packages
@@ -43,7 +42,7 @@ tests_require = ['zope.testing']
 
 setup(
     name = name,
-    version = version,
+    version = '0.3dev',
     author = 'Jim Fulton',
     author_email = 'jim@zope.com',
     description = 'ZC Buildout recipe for zdaemon scripts',
