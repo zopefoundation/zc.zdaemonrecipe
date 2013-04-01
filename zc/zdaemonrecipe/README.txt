@@ -226,7 +226,7 @@ Creating shell start scripts
 By default, the startup scripts are generated Python scripts that use
 the zdaemon module.  Sometimes, this is inconvenient.  In particular,
 when deploying software, generated Python scripts may break after a
-software update because they contain pasths to software eggs.  We can
+software update because they contain paths to software eggs.  We can
 request shell scripts that invoke a generic zdaemon script.  The shell
 script only depends on the path to the zdaemon script, which generally
 doesn't change when updating softawre.
