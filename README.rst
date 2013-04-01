@@ -10,7 +10,7 @@ scripts.
 Releases
 ********
 
-0.3 (unreleased)
+0.3 (2013-04-01)
 ================
 
 - Added ``shell-script`` setting.  When true, shell scripts that refer
