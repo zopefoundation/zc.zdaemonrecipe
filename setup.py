@@ -42,7 +42,7 @@ tests_require = ['zope.testing']
 
 setup(
     name = name,
-    version = '0.3dev',
+    version='0.3',
     author = 'Jim Fulton',
     author_email = 'jim@zope.com',
     description = 'ZC Buildout recipe for zdaemon scripts',
