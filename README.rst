@@ -10,6 +10,12 @@ scripts.
 Releases
 ********
 
+0.3.1 (2013-04-01)
+==================
+
+- Add MANIFEST.in, necessary with the move to git.
+
+
 0.3 (2013-04-01)
 ================
 
