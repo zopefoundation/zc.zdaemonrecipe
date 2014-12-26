@@ -27,7 +27,7 @@ except ImportError:
     not_found = (re.compile(r'Not found: [^\n]+/(\w|\.)+/\r?\n'), '')
 
 setuptools_or_distribute = (
-    re.compile(r"[d-]  (setuptools|distribute)-"), "setuptools-")
+    re.compile(r"[d-]  (setuptools|distribute)([.]egg-link|-pyN.N.egg)"), "setuptools-pyN.N.egg")
 
 
 def newlines_in_program():
