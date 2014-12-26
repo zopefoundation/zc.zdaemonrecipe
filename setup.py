@@ -36,8 +36,6 @@ long_description=(
         '**********************\n'
         )
 
-open('doc.txt', 'w').write(long_description)
-
 tests_require = ['zope.testing']
 
 setup(
