@@ -36,7 +36,7 @@ long_description=(
         '**********************\n'
         )
 
-tests_require = ['zope.testing']
+tests_require = ['six', 'zdaemon', 'zope.testing']
 
 setup(
     name = name,
@@ -50,7 +50,7 @@ setup(
     entry_points=entry_points,
     packages = find_packages('.'),
     namespace_packages = ['zc'],
-    extras_require = dict(test=['six', 'zdaemon', 'zope.testing']),
+    extras_require = dict(test=tests_require),
     install_requires = ['setuptools',
                         'zc.buildout', 'zc.recipe.egg',
                         'ZConfig'],
