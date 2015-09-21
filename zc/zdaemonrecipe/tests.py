@@ -11,15 +11,17 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+from six import print_
 
 import os, re, shutil, sys, tempfile
 import pkg_resources
 
 import zc.buildout.testing
 
+import doctest
 import unittest
 import zope.testing
-from zope.testing import doctest, renormalizing
+from zope.testing import renormalizing
 
 try:
     from zc.buildout.testing import not_found
@@ -45,7 +47,7 @@ There can be newlines in the program option:
     ...             1
     ... ''')
 
-    >>> print system(buildout),
+    >>> print_(system(buildout), end='')
     Installing run.
     Generated script '/sample-buildout/bin/zdaemon'.
     Generated script '/sample-buildout/bin/run'.
@@ -64,8 +66,6 @@ There can be newlines in the program option:
         path /sample-buildout/parts/run/transcript.log
       </logfile>
     </eventlog>
-
-    
     """
 
 

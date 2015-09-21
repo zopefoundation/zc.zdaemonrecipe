@@ -40,7 +40,9 @@ Let's look at an example:
 If we run the buildout, we'll get a run part that contains the zdaemon
 configuration file and a run script in the bin directory:
 
-    >>> print system(buildout),
+    >>> from six import print_
+
+    >>> print_(system(buildout), end='')
     Installing run.
     Generated script '/sample-buildout/bin/zdaemon'.
     Generated script '/sample-buildout/bin/run'.
@@ -60,11 +62,12 @@ configuration file and a run script in the bin directory:
       </logfile>
     </eventlog>
 
-    >>> cat('bin', 'run') # doctest: +NORMALIZE_WHITESPACE
+    >>> cat('bin', 'run') # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
     #!/usr/local/bin/python2.4
     <BLANKLINE>
     import sys
     sys.path[0:0] = [
+      ...
       '/sample-buildout/eggs/zdaemon-2.0-py2.4.egg',
       '/sample-buildout/eggs/ZConfig-2.4-py2.4.egg',
       ]
@@ -117,7 +120,7 @@ deployment-defined locations:
     ... user = bob
     ... ''')
 
-    >>> print system(buildout),
+    >>> print_(system(buildout), end='')
     Uninstalling run.
     Installing run.
     Generated script '/sample-buildout/init.d/test-deploy-run'.
@@ -145,11 +148,12 @@ deployment-defined locations:
       </logfile>
     </eventlog>
 
-    >>> cat('init.d', 'test-deploy-run') # doctest: +NORMALIZE_WHITESPACE
+    >>> cat('init.d', 'test-deploy-run') # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
     #!/usr/local/bin/python2.4
     <BLANKLINE>
     import sys
     sys.path[0:0] = [
+      ...
       '/sample-buildout/eggs/zdaemon-2.0a6-py2.4.egg',
       '/sample-buildout/eggs/ZConfig-2.4a6-py2.4.egg',
       ]
@@ -201,7 +205,7 @@ simply provide a zdaemon.conf option in your instance section:
     ... user = bob
     ... ''')
 
-    >>> print system(buildout),
+    >>> print_(system(buildout), end='')
     Uninstalling run.
     Installing run.
     Generated script '/sample-buildout/init.d/deploy-run'.
@@ -254,7 +258,7 @@ To request a shell script, add a shell-script option with a true value:
     ... user = alice
     ... ''')
 
-    >>> print system(buildout),  # doctest: +NORMALIZE_WHITESPACE
+    >>> print_(system(buildout), end='')  # doctest: +NORMALIZE_WHITESPACE
     Uninstalling run.
     Installing run.
     zc.zdaemonrecipe: Generated shell script

@@ -14,12 +14,16 @@
 """zdaemon -- a package to manage a daemon application."""
 
 import ZConfig.schemaless
-import cStringIO
 import logging
 import os
+import sys
 import zc.buildout.easy_install
 import zc.recipe.egg
 
+if sys.version_info >= (3,):
+    from io import StringIO
+else:
+    from cStringIO import StringIO
 
 logger = logging.getLogger("zc.zdaemonrecipe")
 
@@ -106,7 +110,7 @@ class Recipe:
 
         zdaemon_conf = options.get('zdaemon.conf', '')+'\n'
         zdaemon_conf = ZConfig.schemaless.loadConfigFile(
-            cStringIO.StringIO(zdaemon_conf))
+            StringIO(zdaemon_conf))
 
         defaults = {
             'program': "%s" % ' '.join(options['program'].split()),
@@ -159,7 +163,7 @@ class Recipe:
             dest = os.path.join(options['rc-directory'], rc)
             if not (os.path.exists(dest) and open(dest).read() == contents):
                 open(dest, 'w').write(contents)
-                os.chmod(dest, 0755)
+                os.chmod(dest, 0o755)
                 logger.info("Generated shell script %r.", dest)
         else:
             zc.buildout.easy_install.scripts(

@@ -50,11 +50,24 @@ setup(
     entry_points=entry_points,
     packages = find_packages('.'),
     namespace_packages = ['zc'],
-    extras_require = dict(test=['zdaemon', 'zope.testing']),
+    extras_require = dict(test=['six', 'zdaemon', 'zope.testing']),
     install_requires = ['setuptools',
                         'zc.buildout', 'zc.recipe.egg',
                         'ZConfig'],
     test_suite='zc.zdaemonrecipe.tests.test_suite',
     tests_require=tests_require,
     zip_safe=False,
+    classifiers=[
+        "Framework :: Buildout"
+        "License :: OSI Approved :: Zope Public License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.6",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.2",
+        "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
+        ]
     )
