@@ -13,7 +13,9 @@ Releases
 0.3.2 (unreleased)
 ==================
 
-- TBD.
+- Add support for Python 3.5 up to 3.8.
+
+- Drop support for Python 2.6, 3.2, 3.3 and 3.4.
 
 
 0.3.1 (2013-04-01)
@@ -33,7 +35,7 @@ Releases
 0.2 (2008-09-10)
 ================
 
-- Added support for the deployment recipe ``name`` option. 
+- Added support for the deployment recipe ``name`` option.
 
 
 0.1 (2008-05-01)
