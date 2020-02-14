@@ -1,13 +1,3 @@
+version: ~> 1.0
 language: python
-python:
-    - 2.6
-    - 2.7
-    - 3.2
-    - 3.3
-    - 3.4
-install:
-    - pip install .
-script:
-    - python setup.py test -q
-notifications:
-    email: false
+import: zopefoundation/meta:travis-ci-config/minimal.yml
