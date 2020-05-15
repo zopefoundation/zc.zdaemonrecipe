@@ -86,7 +86,7 @@ class Recipe:
                                        self.name+'-zdaemon.sock')
 
             rc = deployment + '-' + self.name
-            rc=os.path.join(options['rc-directory'], rc)
+            rc = os.path.join(options['rc-directory'], rc)
 
             logrotate = options['logrotate']
             options.created(logrotate)
@@ -117,7 +117,7 @@ class Recipe:
             'daemon': 'on',
             'transcript': event_log_path,
             'socket-name': socket_path,
-            'directory' : run_directory,
+            'directory': run_directory,
             }
         if deployment:
             defaults['user'] = options['user']
@@ -146,7 +146,7 @@ class Recipe:
         options.created(rc)
         if self.shell_script:
             if not os.path.exists(options['zdaemon']):
-                logger.warn(no_zdaemon % options['zdaemon'])
+                logger.warn("Path does not exist: %s" % options['zdaemon'])
 
             contents = "%(zdaemon)s -C '%(conf)s' $*" % dict(
                 zdaemon=options['zdaemon'],
@@ -169,24 +169,25 @@ class Recipe:
             zc.buildout.easy_install.scripts(
                 [(rc, 'zdaemon.zdctl', 'main')],
                 ws, options['executable'], options['rc-directory'],
-                arguments = ('['
-                             '\n        %r, %r,'
-                             '\n        ]+sys.argv[1:]'
-                             '\n        '
-                             % ('-C', zdaemon_conf_path,
-                                )
-                             ),
+                arguments=('['
+                           '\n        %r, %r,'
+                           '\n        ]+sys.argv[1:]'
+                           '\n        '
+                           % ('-C', zdaemon_conf_path,
+                              )
+                           ),
                 )
 
         return options.created()
 
-
     update = install
+
 
 def event_log(path, *data):
     return ZConfig.schemaless.Section(
         'eventlog', '', None,
         [ZConfig.schemaless.Section('logfile', '', dict(path=[path]))])
+
 
 event_log_template = """
 <eventlog>
