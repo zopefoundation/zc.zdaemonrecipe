@@ -13,14 +13,12 @@
 ##############################################################################
 from six import print_
 
-import os, re, shutil, sys, tempfile
-import pkg_resources
+import re
 
 import zc.buildout.testing
 
 import doctest
 import unittest
-import zope.testing
 from zope.testing import renormalizing
 
 try:
@@ -29,7 +27,9 @@ except ImportError:
     not_found = (re.compile(r'Not found: [^\n]+/(\w|\.)+/\r?\n'), '')
 
 setuptools_or_distribute = (
-    re.compile(r"[d-]  (setuptools|distribute)([.]egg-link|-pyN.N.egg)"), "setuptools-pyN.N.egg")
+    re.compile(
+        r"[d-]  (setuptools|distribute)([.]egg-link|-pyN.N.egg)"
+        ), "setuptools-pyN.N.egg")
 
 
 def newlines_in_program():
@@ -66,7 +66,7 @@ There can be newlines in the program option:
         path /sample-buildout/parts/run/transcript.log
       </logfile>
     </eventlog>
-    """
+    """  # noqa: F821
 
 
 def setUp(test):
@@ -81,17 +81,17 @@ def setUp(test):
 checker = renormalizing.RENormalizing([
     zc.buildout.testing.normalize_path,
     (re.compile(
-    "Couldn't find index page for '[a-zA-Z0-9.]+' "
-    "\(maybe misspelled\?\)"
-    "\n"
+        r"Couldn't find index page for '[a-zA-Z0-9.]+' "
+        r"\(maybe misspelled\?\)"
+        r"\n"
     ), ''),
-    (re.compile('#![^\n]+\n'), ''),                
-    (re.compile('-\S+-py\d[.]\d(-\S+)?.egg'),
-     '-pyN.N.egg',
-    ),
+    (re.compile(r'#![^\n]+\n'), ''),
+    (re.compile(r'-\S+-py\d[.]\d(-\S+)?.egg'),
+     '-pyN.N.egg',),
     not_found,
     setuptools_or_distribute,
     ])
+
 
 def test_suite():
     return unittest.TestSuite((

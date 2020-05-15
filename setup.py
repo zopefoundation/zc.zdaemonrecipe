@@ -11,20 +11,22 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-name = 'zc.zdaemonrecipe'
-
 import os
 from setuptools import setup, find_packages
+
+name = 'zc.zdaemonrecipe'
 
 entry_points = '''
 [zc.buildout]
 default=zc.zdaemonrecipe:Recipe
 '''
 
+
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
-long_description=(
+
+long_description = (
         read('README.rst')
         + '\n' +
         'Detailed Documentation\n'
@@ -44,22 +46,21 @@ tests_require = [
     ]
 
 setup(
-    name = name,
+    name=name,
     version='0.3.2.dev0',
-    author = 'Jim Fulton',
-    author_email = 'jim@zope.com',
-    description = 'ZC Buildout recipe for zdaemon scripts',
+    author='Jim Fulton',
+    author_email='jim@zope.com',
+    description='ZC Buildout recipe for zdaemon scripts',
     long_description=long_description,
-    license = 'ZPL 2.1',
+    license='ZPL 2.1',
 
     entry_points=entry_points,
-    packages = find_packages('.'),
-    namespace_packages = ['zc'],
-    extras_require = dict(test=tests_require),
-    install_requires = ['setuptools',
-                        'zc.buildout', 'zc.recipe.egg',
-                        'ZConfig'],
-    test_suite='zc.zdaemonrecipe.tests.test_suite',
+    packages=find_packages('.'),
+    namespace_packages=['zc'],
+    extras_require=dict(test=tests_require),
+    install_requires=['setuptools',
+                      'zc.buildout', 'zc.recipe.egg',
+                      'ZConfig'],
     tests_require=tests_require,
     zip_safe=False,
     classifiers=[
