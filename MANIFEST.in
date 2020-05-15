@@ -10,11 +10,10 @@ exclude MANIFEST.in
 recursive-include docs *.bat
 recursive-include docs *.py
 recursive-include docs *.rst
-recursive-include zc *.txt
 recursive-include docs Makefile
 
-recursive-include src *.pt
-recursive-include src *.rst
-recursive-include src *.txt
-recursive-include src *.xml
-recursive-include src *.zcml
+recursive-include zc *.pt
+recursive-include zc *.rst
+recursive-include zc *.txt
+recursive-include zc *.xml
+recursive-include zc *.zcml
