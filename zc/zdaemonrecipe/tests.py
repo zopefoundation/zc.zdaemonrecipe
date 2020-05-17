@@ -66,7 +66,7 @@ There can be newlines in the program option:
         path /sample-buildout/parts/run/transcript.log
       </logfile>
     </eventlog>
-    """  # noqa: F821
+    """
 
 
 def setUp(test):
