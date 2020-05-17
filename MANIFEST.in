@@ -12,8 +12,10 @@ recursive-include docs *.py
 recursive-include docs *.rst
 recursive-include docs Makefile
 
-recursive-include zc *.pt
-recursive-include zc *.rst
-recursive-include zc *.txt
-recursive-include zc *.xml
-recursive-include zc *.zcml
+recursive-include src *.gif
+recursive-include src *.pt
+recursive-include src *.py
+recursive-include src *.rst
+recursive-include src *.txt
+recursive-include src *.xml
+recursive-include src *.zcml

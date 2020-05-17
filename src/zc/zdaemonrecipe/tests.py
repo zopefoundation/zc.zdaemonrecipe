@@ -14,7 +14,6 @@
 from six import print_
 
 import re
-
 import zc.buildout.testing
 
 import doctest

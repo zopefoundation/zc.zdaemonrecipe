@@ -32,7 +32,7 @@ long_description = (
         'Detailed Documentation\n'
         '**********************\n'
         + '\n' +
-        read('zc', 'zdaemonrecipe', 'README.txt')
+        read('src', 'zc', 'zdaemonrecipe', 'README.txt')
         + '\n' +
         'Download\n'
         '**********************\n'
@@ -55,7 +55,9 @@ setup(
     license='ZPL 2.1',
 
     entry_points=entry_points,
-    packages=find_packages('.'),
+    packages=find_packages('src'),
+    package_dir={'': 'src'},
+    include_package_data=True,
     namespace_packages=['zc'],
     extras_require=dict(test=tests_require),
     install_requires=['setuptools',
